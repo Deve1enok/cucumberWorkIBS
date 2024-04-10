@@ -3,6 +3,7 @@ package org.ibs.fazlyakhmetov.pages;
 import lombok.extern.slf4j.Slf4j;
 import org.ibs.fazlyakhmetov.tests.qualit.BaseTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Tag("@all")
 public class QualitProductPage {
     public static WebDriver driver;
 

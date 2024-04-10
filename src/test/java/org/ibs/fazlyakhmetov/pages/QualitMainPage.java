@@ -1,12 +1,13 @@
 package org.ibs.fazlyakhmetov.pages;
 
 import org.ibs.fazlyakhmetov.tests.qualit.BaseTest;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
+@Tag("@all")
 public class QualitMainPage {
     public static WebDriver driver;
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 
 
-@Tag("all")
+@Tag("@all")
 public class QualitSteps {
     public static WebDriver driver;
     QualitMainPage qualitMainPage = new QualitMainPage(driver);
