@@ -1,10 +1,12 @@
 package org.ibs.fazlyakhmetov.steps;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.ru.И;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 
 import java.sql.*;
+import java.util.List;
 
 @Tag("@jdbc")
 public class JdbcSteps {
@@ -23,8 +25,8 @@ public class JdbcSteps {
 
     }
 
-    @И("проверяем таблицу на наличие дефолтных записей")
-    public void проверяем_таблицу_на_наличие_дефолтных_записей() throws SQLException {
+    @И("проверяем таблицу на наличие записей")
+    public void проверяем_таблицу_на_наличие_записей() throws SQLException {
         String selectAll = "SELECT * FROM food";
 
         ResultSet defaultTable = statement.executeQuery(selectAll);
@@ -90,7 +92,6 @@ public class JdbcSteps {
         String selectAll = "SELECT * FROM food";
         System.out.printf("%n%s%n", "Проверяем таблицу на удаление товара");
 
-
         ResultSet tableAfterDeleteString = statement.executeQuery(selectAll);
 
         while (tableAfterDeleteString.next()) {
@@ -143,8 +144,35 @@ public class JdbcSteps {
         }
         return previousProduct;
     }
+
     @И("отключение от базы данных Food")
     public void отключение_от_базы_данных_Food() throws SQLException {
         connection.close();
+    }
+
+    @И("выполняем запрос на вставку")
+    public void выполняем_запрос_на_вставку(DataTable arg) throws SQLException {
+        String insert =
+                "INSERT INTO food(food_name, food_type, food_exotic) VALUES (?, ?, ?)";
+        preparedStatement = connection.prepareStatement(insert);
+
+        List<List<String>> table = arg.asLists(String.class);
+        for (int i = 0; i < 10; i++) {
+            table.get(i).get(0);
+            table.get(i).get(1);
+            table.get(i).get(2);
+            preparedStatement.setString(1, table.get(i).get(0));
+            preparedStatement.setString(2, table.get(i).get(1));
+            preparedStatement.setString(3, table.get(i).get(2));
+            preparedStatement.addBatch();
+            preparedStatement.executeBatch();
+        }
+    }
+
+    @И("выполнен запрос на удаление добавленных записей")
+    public void выполнен_запрос_на_удаление_добавленных_записей() throws SQLException {
+        String delete = "DELETE FROM food WHERE food_id > 4 AND food_id < 20";
+
+        statement.executeUpdate(delete);
     }
 }
