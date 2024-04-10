@@ -31,7 +31,7 @@ public class BaseTest {
         driver.get(configOwner.baseUrl());
     }
 
-    @AfterStep
+    @AfterStep(value = "@all")
     public void afterStep(Scenario scenario) throws IllegalMonitorStateException {
         Allure.addAttachment("Screenshot step", new ByteArrayInputStream(((TakesScreenshot) driver).
                 getScreenshotAs(OutputType.BYTES)));
