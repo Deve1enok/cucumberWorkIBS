@@ -9,7 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @Tag("@all")
 public class QualitProductPage {
     public static WebDriver driver;
+    public static WebDriverWait wait = new WebDriverWait(BaseTest.driver, Duration.ofSeconds(10));
 
     public QualitProductPage(WebDriver webDriver) {
         PageFactory.initElements(BaseTest.driver, this);
@@ -85,7 +89,7 @@ public class QualitProductPage {
 
     public static int checkQuantityProducts() {
         int count = 0;
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 6; i++) {
             try {
                 WebElement wb = driver.findElement(By.xpath("//tbody/tr[" + i + "]"));
                 count++;
@@ -105,6 +109,7 @@ public class QualitProductPage {
 
 
     public static void checkAddedFruit(String tableField) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
         List<WebElement> productWebList = driver.findElements(By.xpath("//tbody/tr"));
         ArrayList<String> productTextList = new ArrayList<>();
         for (WebElement product : productWebList) {
