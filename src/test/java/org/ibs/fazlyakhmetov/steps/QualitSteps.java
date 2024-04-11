@@ -4,6 +4,7 @@ import io.cucumber.java.ru.И;
 import org.ibs.fazlyakhmetov.pages.QualitMainPage;
 import org.ibs.fazlyakhmetov.pages.QualitProductPage;
 import org.ibs.fazlyakhmetov.tests.qualit.BaseTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 
@@ -57,7 +58,8 @@ public class QualitSteps {
 
     @И("проверено количество количество товаров в списке")
     public void checkQuantityProducts() {
-        QualitProductPage.checkQuantityProducts();
+        Assertions.assertEquals(5, QualitProductPage.checkQuantityProducts(),
+                "Количество строк в таблице не равно 5");
     }
 
     @И("проверено добавление введенного {string}")

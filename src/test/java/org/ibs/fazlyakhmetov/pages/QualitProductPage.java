@@ -100,24 +100,24 @@ public class QualitProductPage {
         return count;
     }
 
-    /**
-     * Цикл для перебора строки в таблице и сравнения строки с вашим парамтером
-     * Используается для проверки результата
-     *
-     * @author Fazlyakhmetov_Dinar
-     */
+        /**
+         * Цикл для перебора строки в таблице и сравнения строки с вашим парамтером
+         * Используается для проверки результата
+         *
+         * @author Fazlyakhmetov_Dinar
+         */
 
 
-    public static void checkAddedFruit(String tableField) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
-        List<WebElement> productWebList = driver.findElements(By.xpath("//tbody/tr"));
-        ArrayList<String> productTextList = new ArrayList<>();
-        for (WebElement product : productWebList) {
-            productTextList.add(product.getText());
+        public static void checkAddedFruit (String tableField){
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
+            List<WebElement> productWebList = driver.findElements(By.xpath("//tbody/tr"));
+            ArrayList<String> productTextList = new ArrayList<>();
+            for (WebElement product : productWebList) {
+                productTextList.add(product.getText());
+            }
+            if (productTextList.contains(tableField)) {
+                log.info("Добавленный продукт совпадает");
+            } else Assertions.fail("Добавленный продукт не совпадает");
         }
-        if (productTextList.contains(tableField)) {
-            log.info("Добавленный продукт совпадает");
-        } else Assertions.fail("Добавленный продукт не совпадает");
     }
-}
 
