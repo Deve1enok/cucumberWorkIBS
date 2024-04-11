@@ -26,10 +26,15 @@ public class JdbcSteps {
     }
 
     @И("проверяем таблицу на наличие записей")
-    public void проверяем_таблицу_на_наличие_записей() throws SQLException {
+    public boolean проверяем_таблицу_на_наличие_записей() throws SQLException {
         String selectAll = "SELECT * FROM food";
 
         ResultSet defaultTable = statement.executeQuery(selectAll);
+
+        boolean orange = false;
+        boolean cabbage = false;
+        boolean tomato = false;
+        boolean apple = false;
 
         System.out.printf("%s%n", "Проверка таблицы на наличие дефолтных значений");
         while (defaultTable.next()) {
@@ -38,8 +43,20 @@ public class JdbcSteps {
             String food_type = defaultTable.getString("food_type");
             boolean exotic = defaultTable.getBoolean("food_exotic");
 
+            if (food_id == 1 && food_name.equals("Апельсин")) {
+                orange = true;
+            } else if (food_id == 2 && food_name.equals("Капуста")) {
+                cabbage = true;
+            } else if (food_id == 3 && food_name.equals("Помидор")) {
+                tomato = true;
+            } else if (food_id == 4 && food_name.equals("Яблоко")) {
+                apple = true;
+            } else {
+                break;
+            }
             System.out.printf("%d %s %s %b%n", food_id, food_name, food_type, exotic);
         }
+        return orange && cabbage && tomato && apple;
     }
 
     @И("выполнен запрос на вставку записей {string},{string},{int}")
