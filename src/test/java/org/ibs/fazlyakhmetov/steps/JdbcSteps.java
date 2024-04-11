@@ -105,11 +105,16 @@ public class JdbcSteps {
     }
 
     @И("проверяем таблицу на удаление записи")
-    public void проверяем_таблицу_на_удаление_записи() throws SQLException {
+    public boolean проверяем_таблицу_на_удаление_записи() throws SQLException {
         String selectAll = "SELECT * FROM food";
         System.out.printf("%n%s%n", "Проверяем таблицу на удаление товара");
 
         ResultSet tableAfterDeleteString = statement.executeQuery(selectAll);
+
+        boolean orange = false;
+        boolean cabbage = false;
+        boolean tomato = false;
+        boolean apple = false;
 
         while (tableAfterDeleteString.next()) {
             int food_id = tableAfterDeleteString.getInt("food_id");
@@ -117,8 +122,21 @@ public class JdbcSteps {
             String food_type = tableAfterDeleteString.getString("food_type");
             boolean exotic = tableAfterDeleteString.getBoolean("food_exotic");
 
+            if (food_id == 1 && food_name.equals("Апельсин")) {
+                orange = true;
+            } else if (food_id == 2 && food_name.equals("Капуста")) {
+                cabbage = true;
+            } else if (food_id == 3 && food_name.equals("Помидор")) {
+                tomato = true;
+            } else if (food_id == 4 && food_name.equals("Яблоко")) {
+                apple = true;
+            } else {
+                break;
+            }
             System.out.printf("%d %s %s %b%n", food_id, food_name, food_type, exotic);
         }
+        return orange && cabbage && tomato && apple;
+
     }
 
     @И("проверяем последнее дефолтное значение в таблице {int},{string},{string}")
@@ -188,7 +206,7 @@ public class JdbcSteps {
 
     @И("выполнен запрос на удаление добавленных записей")
     public void выполнен_запрос_на_удаление_добавленных_записей() throws SQLException {
-        String delete = "DELETE FROM food WHERE food_id > 4 AND food_id < 20";
+        String delete = "DELETE FROM food WHERE food_id > 4 AND food_id < 30";
 
         statement.executeUpdate(delete);
     }
