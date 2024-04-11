@@ -3,13 +3,14 @@ package org.ibs.fazlyakhmetov.steps;
 import io.cucumber.java.ru.И;
 import org.ibs.fazlyakhmetov.pages.QualitMainPage;
 import org.ibs.fazlyakhmetov.pages.QualitProductPage;
+import org.ibs.fazlyakhmetov.tests.qualit.BaseTest;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 
 
 @Tag("@all")
 public class QualitSteps {
-    public static WebDriver driver;
+    public static WebDriver driver = BaseTest.driver;
     QualitMainPage qualitMainPage = new QualitMainPage(driver);
     QualitProductPage qualitProductPage = new QualitProductPage(driver);
 
