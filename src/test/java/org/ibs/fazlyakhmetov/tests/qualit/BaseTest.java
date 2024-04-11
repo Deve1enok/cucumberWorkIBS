@@ -38,7 +38,7 @@ public class BaseTest {
     }
 
     @After(value = "@all")
-    public static void afterAll() {
+    public static void after() {
         driver.close();
         driver.quit();
     }
