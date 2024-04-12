@@ -23,12 +23,12 @@ public class QualitMainPage {
         driver = webDriver;
     }
 
-    @FindBy(xpath = "//li/a[@id='navbarDropdown']")
+    @FindBy(xpath = "//*[@id='navbarDropdown']")
     private WebElement sandboxDropDown;
 
     @FindBy(xpath = "//a[@href='/food']")
     private WebElement products;
-    @FindBy(xpath = "//div/a[@id='reset']")
+    @FindBy(xpath = "//*[@id='reset']")
     private WebElement resetData;
 
 

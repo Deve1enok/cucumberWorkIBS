@@ -2,7 +2,7 @@ package org.ibs.fazlyakhmetov.config.qualit;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources({"file:C:\\Users\\Dinar\\IdeaProjects\\homeWorkIBS\\src\\test\\resources\\jdbc.properties"})
+@Config.Sources({"file:src/test/resources/conf.properties"})
 public interface QualitConfig extends Config {
 
     @Key("baseUrl")
