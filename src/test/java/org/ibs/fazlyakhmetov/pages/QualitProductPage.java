@@ -19,13 +19,16 @@ import java.util.List;
 @Slf4j
 @Tag("@all")
 public class QualitProductPage {
-    public static WebDriver driver;
-    public static WebDriverWait wait = new WebDriverWait(BaseTest.driver, Duration.ofSeconds(10));
+    private static WebDriver driver;
+
+    private static WebDriverWait wait;
 
     public QualitProductPage(WebDriver webDriver) {
         PageFactory.initElements(BaseTest.driver, this);
+        wait = new WebDriverWait(BaseTest.driver, Duration.ofSeconds(10));
         driver = webDriver;
     }
+
 
     @FindBy(xpath = "//div/button[@data-target='#editModal']")
     private WebElement addButton;
@@ -45,7 +48,6 @@ public class QualitProductPage {
     private WebElement defaultTable;
     @FindBy(xpath = "//div/a[@id='reset']")
     private WebElement resetData;
-
 
     public QualitProductPage openMenuAddProducts() {
         addButton.click();
@@ -100,24 +102,24 @@ public class QualitProductPage {
         return count;
     }
 
-        /**
-         * Цикл для перебора строки в таблице и сравнения строки с вашим парамтером
-         * Используается для проверки результата
-         *
-         * @author Fazlyakhmetov_Dinar
-         */
+    /**
+     * Цикл для перебора строки в таблице и сравнения строки с вашим парамтером
+     * Используается для проверки результата
+     *
+     * @author Fazlyakhmetov_Dinar
+     */
 
 
-        public static void checkAddedFruit (String tableField){
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
-            List<WebElement> productWebList = driver.findElements(By.xpath("//tbody/tr"));
-            ArrayList<String> productTextList = new ArrayList<>();
-            for (WebElement product : productWebList) {
-                productTextList.add(product.getText());
-            }
-            if (productTextList.contains(tableField)) {
-                log.info("Добавленный продукт совпадает");
-            } else Assertions.fail("Добавленный продукт не совпадает");
+    public static void checkAddedFruit(String tableField) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
+        List<WebElement> productWebList = driver.findElements(By.xpath("//tbody/tr"));
+        ArrayList<String> productTextList = new ArrayList<>();
+        for (WebElement product : productWebList) {
+            productTextList.add(product.getText());
         }
+        if (productTextList.contains(tableField)) {
+            log.info("Добавленный продукт совпадает");
+        } else Assertions.fail("Добавленный продукт не совпадает");
     }
+}
 

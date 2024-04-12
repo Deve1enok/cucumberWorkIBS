@@ -13,12 +13,13 @@ import java.time.Duration;
 
 @Tag("@all")
 public class QualitMainPage {
-    public static WebDriver driver;
+    private static WebDriver driver;
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    private static WebDriverWait wait;
 
     public QualitMainPage(WebDriver webDriver) {
         PageFactory.initElements(BaseTest.driver, this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver = webDriver;
     }
 
