@@ -13,7 +13,7 @@ ___
 - "cucumber.filter.tags=(@jdbc or @all)"
 ___
 
-## Команды для запуска тестов УДАЛЕННО в IDEA(terminal):
+# Команды для запуска тестов УДАЛЕННО в IDEA(terminal):
 
 Запуск в chrome (всех тестов)
 - `mvn clean test -Dtype.browser=chrome -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve`
@@ -21,7 +21,7 @@ ___
 Запуск в firefox (всех тестов)
 - `mvn clean test -Dtype.browser=firefox -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve`
 
-## Команды для запуска тестов ЛОКАЛЬНО в IDEA(terminal):
+# Команды для запуска тестов ЛОКАЛЬНО в IDEA(terminal):
 - `mvn clean test -Dselenoid.run=false` - без аллюр отчетом
 - `mvn clean test -Dselenoid.run=false allure:serve` - с аллюр отчетом
 ___
