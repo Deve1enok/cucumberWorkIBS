@@ -72,8 +72,14 @@ public class BaseTest {
 
     @After(value = "@all")
     public static void after() {
-        driver.close();
-        driver.quit();
+        String selenoidRun = System.getProperty("selenoid.run");
+
+        if (selenoidRun != null && selenoidRun.equalsIgnoreCase("true")) {
+            driver.quit();
+        } else {
+            driver.close();
+            driver.quit();
+        }
     }
 }
 
