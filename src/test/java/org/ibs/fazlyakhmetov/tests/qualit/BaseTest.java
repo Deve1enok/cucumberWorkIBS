@@ -12,9 +12,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.ByteArrayInputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.time.Duration;
+import java.util.Map;
 
 @Tag("@all")
 public class BaseTest {
@@ -22,13 +27,32 @@ public class BaseTest {
     public static QualitConfig configOwner = ConfigFactory.create(QualitConfig.class);
 
     @Before(value = "@all")
-    public static void beforeAll() {
-        System.setProperty("webdriver.chromedriver.driver", configOwner.chromeDriver());
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
-        driver.get(configOwner.baseUrl());
+    public static void beforeAll() throws MalformedURLException {
+        String selenoidRun = System.getProperty("selenoid.run");
+
+        if (selenoidRun != null && selenoidRun.equalsIgnoreCase("true")) {
+            System.setProperty(configOwner.remoteDriver(), "remote");
+            System.setProperty(configOwner.selenoidUrl(), "http://149.154.71.152:4444/wd/hub");
+            System.setProperty(configOwner.typeBrowser(), "chrome");
+
+            ChromeOptions options = new ChromeOptions();
+            options.setCapability("browserName", configOwner.typeBrowser());
+            options.setCapability("browserVersion", "109.0");
+            options.addArguments("start-maximized");
+            options.setCapability("selenoid:options", Map.<String, Object>of(
+                    "enableVNC", true,
+                    "enableVideo", true
+            ));
+            driver = new RemoteWebDriver(URI.create(configOwner.selenoidUrl()).toURL(), options);
+            driver.get(configOwner.baseUrl());
+        } else {
+            System.setProperty("webdriver.chromedriver.driver", configOwner.chromeDriver());
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+            driver.get(configOwner.baseUrl());
+        }
     }
 
     @AfterStep(value = "@all")
