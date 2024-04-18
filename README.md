@@ -8,6 +8,7 @@ ___
 - "cucumber.filter.tags=(@all)"
 - "cucumber.filter.tags=(@jdbc)"
 - "cucumber.filter.tags=(@jdbc or @all)"
+
 Команды для запуска тестов удаленно в IDEA(terminal):
 `mvn clean test -Dtype.browser=chrome -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve` - 
 - `mvn clean test -Dtype.browser=chrome -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve` -
