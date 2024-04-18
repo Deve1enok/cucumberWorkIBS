@@ -12,4 +12,16 @@ public interface QualitConfig extends Config {
     @Key("pathChromeDriver")
     @DefaultValue("src/test/resources/apps/chromedriver.exe")
     String chromeDriver();
+
+    @Key("selenoid.url")
+    @DefaultValue("http://149.154.71.152:4444/wd/hub")
+    String selenoidUrl();
+
+    @Key("type.browser")
+    @DefaultValue("chrome")
+    String typeBrowser();
+
+    @Key("remote.driver")
+    @DefaultValue("remote")
+    String remoteDriver();
 }
