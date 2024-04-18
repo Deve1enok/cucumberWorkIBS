@@ -6,7 +6,7 @@ import org.aeonbits.owner.Config;
 public interface QualitConfig extends Config {
 
     @Key("baseUrl")
-    @DefaultValue("http://localhost:8080/")
+    @DefaultValue("http://149.154.71.152:8080/")
     String baseUrl();
 
     @Key("pathChromeDriver")
@@ -16,12 +16,4 @@ public interface QualitConfig extends Config {
     @Key("selenoid.url")
     @DefaultValue("http://149.154.71.152:4444/wd/hub")
     String selenoidUrl();
-
-    @Key("type.browser")
-    @DefaultValue("chrome")
-    String typeBrowser();
-
-    @Key("remote.driver")
-    @DefaultValue("remote")
-    String remoteDriver();
 }
