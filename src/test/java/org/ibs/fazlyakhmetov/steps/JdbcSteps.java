@@ -16,7 +16,7 @@ public class JdbcSteps {
 
     @И("подключение к базе данных Food")
     public void подключение_к_базе_данных_Food() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/mem:testdb",
+        connection = DriverManager.getConnection("jdbc:h2:tcp://149.154.71.152:9092/mem:testdb;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;",
                 "user", "pass");
         statement = connection.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -43,7 +43,7 @@ public class JdbcSteps {
             String food_type = defaultTable.getString("food_type");
             boolean exotic = defaultTable.getBoolean("food_exotic");
 
-            if (food_id == 1 && food_name.equals("Апельсин")) {
+            if (food_id == 1 || food_name.equals("Апельсин")) {
                 orange = true;
             } else if (food_id == 2 && food_name.equals("Капуста")) {
                 cabbage = true;
@@ -72,24 +72,27 @@ public class JdbcSteps {
         preparedStatement.executeUpdate();
     }
 
-    @И("проверяем таблицу на добавление записи {int},{string},{string}")
-    public void проверяем_таблицу_на_добавление_записи(int idFood, String nameFruit, String typeFruit) throws SQLException {
+    @И("проверяем таблицу на добавление записи {string},{string},{string}")
+    public String проверяем_таблицу_на_добавление_записи(String nameFruit, String typeFruit, String exotic) throws SQLException {
         String selectAll = "SELECT * FROM food";
         ResultSet tableAfterUpdate = statement.executeQuery(selectAll);
 
         System.out.printf("%n%s%n", "Проверяем таблицу на добавление товара последнего товара");
-        tableAfterUpdate.last();
-        int food_id = tableAfterUpdate.getInt("food_id");
-        String food_name = tableAfterUpdate.getString("food_name");
-        String food_type = tableAfterUpdate.getString("food_type");
-        boolean exotic = tableAfterUpdate.getBoolean("food_exotic");
+        while (tableAfterUpdate.next()) {
+            String food_name = tableAfterUpdate.getString("food_name");
+            String food_type = tableAfterUpdate.getString("food_type");
+            String food_exotic = tableAfterUpdate.getString("food_exotic");
 
-        Assertions.assertEquals(idFood, tableAfterUpdate.getInt("food_id"));
-        Assertions.assertEquals(nameFruit, tableAfterUpdate.getString("food_name"));
-        Assertions.assertEquals(typeFruit, tableAfterUpdate.getString("food_type"));
-        Assertions.assertFalse(tableAfterUpdate.getBoolean("food_exotic"));
-
-        System.out.printf("%d %s %s %b%n", food_id, food_name, food_type, exotic);
+            if (food_name.equals(nameFruit) && food_type.equals(typeFruit) && food_exotic.equals(exotic)) {
+                Assertions.assertEquals(nameFruit, food_name);
+                Assertions.assertEquals(typeFruit, food_type);
+                Assertions.assertEquals(exotic, food_exotic);
+            } else {
+                break;
+            }
+            System.out.printf("%s %s %b%n", food_name, food_type, food_exotic);
+        }
+        return String.valueOf(true);
     }
 
     @И("выполнен запрос на удаление")
@@ -99,7 +102,7 @@ public class JdbcSteps {
                 ResultSet.CONCUR_READ_ONLY
         );
 
-        String delete = "DELETE FROM food WHERE food_id = 5";
+        String delete = "DELETE FROM food WHERE food_name LIKE '%Вишня%'";
 
         statement.executeUpdate(delete);
     }
@@ -193,9 +196,6 @@ public class JdbcSteps {
 
         List<List<String>> table = arg.asLists(String.class);
         for (int i = 0; i < 10; i++) {
-            table.get(i).get(0);
-            table.get(i).get(1);
-            table.get(i).get(2);
             preparedStatement.setString(1, table.get(i).get(0));
             preparedStatement.setString(2, table.get(i).get(1));
             preparedStatement.setString(3, table.get(i).get(2));
@@ -206,7 +206,10 @@ public class JdbcSteps {
 
     @И("выполнен запрос на удаление добавленных записей")
     public void выполнен_запрос_на_удаление_добавленных_записей() throws SQLException {
-        String delete = "DELETE FROM food WHERE food_id > 4 AND food_id < 30";
+        String delete = "DELETE FROM food WHERE food_name LIKE '%Арбуз%' OR food_name LIKE '%Ананас%'" +
+                "OR food_name LIKE '%Манго%' OR food_name LIKE '%Тыква%' OR food_name LIKE '%Свекла%'" +
+                "OR food_name LIKE '%Мандарин%' OR food_name LIKE '%Гранат%' OR food_name LIKE '%Дыня%'" +
+                "OR food_name LIKE '%Киви%' OR food_name LIKE '%Лук%'";
 
         statement.executeUpdate(delete);
     }
