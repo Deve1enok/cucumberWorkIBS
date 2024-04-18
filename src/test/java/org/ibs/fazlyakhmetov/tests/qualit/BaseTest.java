@@ -63,18 +63,13 @@ public class BaseTest {
 //                    "enableVideo", true
 //            ));
     }
-
-    @AfterStep(value = "@all")
-    public void afterStep(Scenario scenario) throws IllegalMonitorStateException {
-        Allure.addAttachment("Screenshot step", new ByteArrayInputStream(((TakesScreenshot) driver).
-                getScreenshotAs(OutputType.BYTES)));
-    }
-
     @After(value = "@all")
     public static void after() {
         String selenoidRun = System.getProperty("selenoid.run");
 
         if (selenoidRun != null && selenoidRun.equalsIgnoreCase("true")) {
+            Allure.addAttachment("Latest screenshot", new ByteArrayInputStream(((TakesScreenshot) driver).
+                    getScreenshotAs(OutputType.BYTES)));
             driver.quit();
         } else {
             driver.close();
