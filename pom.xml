@@ -140,8 +140,22 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <selenoid.run>false</selenoid.run>
+            </properties>
+        </profile>
+        <profile>
+            <id>selenoid</id>
+            <properties>
+                <selenoid.run>true</selenoid.run>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -157,8 +171,10 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.21.1/aspectjweaver-1.9.21.1.jar"
                     </argLine>
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/reports/allure-results</allure.results.directory>
-                        <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+                        <allure.results.directory>${project.build.directory}/reports/allure-results
+                        </allure.results.directory>
+                        <junit.jupiter.extensions.autodetection.enabled>true
+                        </junit.jupiter.extensions.autodetection.enabled>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
