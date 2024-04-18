@@ -15,6 +15,7 @@ ___
 
 Запуск в chrome (всех тестов)
 - `mvn clean test -Dtype.browser=chrome -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve`
+  
 Запуск в firefox (всех тестов)
 - `mvn clean test -Dtype.browser=firefox -Dversion.browser=108.0 -D"cucumber.filter.tags=(@jdbc or @all)" -Dselenoid.run=true allure:serve`
 
