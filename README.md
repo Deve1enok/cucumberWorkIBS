@@ -6,7 +6,7 @@ ___
 ## Доступные параметры запуска проекта
 - type.browser = chrome
 - type.browser = firefox 
-- version.browser = 109.0
+- version.browser = 108.0
 - version.browser = 109.0
 - "cucumber.filter.tags=(@all)"
 - "cucumber.filter.tags=(@jdbc)"
